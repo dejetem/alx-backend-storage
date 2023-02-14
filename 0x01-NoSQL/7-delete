@@ -1,0 +1,4 @@
+// remove all document with attribute name equals to Holberton School
+// in the collection school
+
+db.school.deleteMany({name: "Holberton school"})

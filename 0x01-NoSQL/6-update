@@ -1,5 +1,5 @@
 // adds a new attribute to a document in the collection school
-// Updates only document with attribute name="Holberton school"
+// Updates only document with attribute name equals to Holberton school
 // Adds the attribute address with the value “972 Mission street”
 
 db.school.update(
