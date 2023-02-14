@@ -1,3 +1,4 @@
-// find in a collection school with attribute name equals to Holberton school
+// find in a collection school with attr name equals to Holberton school
 
-db.school.find({name:"Holberton school"}
+db.school.find({name:"Holberton school"})
+
