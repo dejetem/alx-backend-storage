@@ -6,24 +6,23 @@ stored in MongoDB
 from pymongo import MongoClient
 
 
-def log_stats(mongo_collection):
-    """
-    function provides some stats about Nginx logs stored in MongoDB
-    """
-    total_logs = mongo_collection.count_documents({})
-    print("{} logs".format(total_logs))
-    print("Methods:")
-    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
-    for method in methods:
-        documents = mongo_collection.count_documents({"method": method})
-        print("\tmethod {}: {}".format(method, documents))
-    status = mongo_collection.count_documents({"method": "GET",
-                                              "path": "/status"})
-    print("{} status check".format(status))
-
-
 if __name__ == "__main__":
-    with MongoClient() as client:
-        db = client.logs
-        collection = db.nginx
-        log_stats(collection)
+    client = MongoClient('mongodb://127.0.0.1:27017')
+    nginx_collection = client.logs.nginx
+    number = nginx_collection.count()
+    number_get = nginx_collection.find({"method": "GET"}).count()
+    number_post = nginx_collection.find({"method": "POST"}).count()
+    number_put = nginx_collection.find({"method": "PUT"}).count()
+    number_patch = nginx_collection.find({"method": "PATCH"}).count()
+    number_delete = nginx_collection.find({"method": "DELETE"}).count()
+    number_status = nginx_collection.find(
+        {"method": "GET", "path": "/status"}).count()
+
+    print("{} logs".format(number))
+    print("Methods:")
+    print("\tmethod GET: {}".format(number_get))
+    print("\tmethod POST: {}".format(number_post))
+    print("\tmethod PUT: {}".format(number_put))
+    print("\tmethod PATCH: {}".format(number_patch))
+    print("\tmethod DELETE: {}".format(number_delete))
+    print("{} status check".format(number_status))
